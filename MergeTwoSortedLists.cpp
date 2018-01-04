@@ -39,3 +39,35 @@ public:
         return head->next;
     }
 };
+
+
+// O(1) space approach
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void appendNode(ListNode **node, ListNode **list)
+    {
+        (*list)->next = (*node);
+        (*list) = (*list)->next;
+        (*node) = (*node)->next;
+    }
+    
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) 
+    {
+        ListNode *head = new ListNode(0);
+        ListNode *curr = head;
+        
+        while(l1 && l2)        
+            appendNode(l1->val <= l2->val ? &l1:&l2, &curr);    
+        
+        curr->next = (l1 ? l1:l2);
+        return head->next;            
+    }
+};
